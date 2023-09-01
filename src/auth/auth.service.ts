@@ -1,6 +1,6 @@
 import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/user/entities/user.entity';
+import { User, UserStatus } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { HashingService } from './hashing/hashing.service';
 import { JwtService } from '@nestjs/jwt';
@@ -8,6 +8,7 @@ import jwtConfig from './config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { MailService } from 'src/mail/mail.service';
+import { VerifyUserDto } from './dto/verify-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -37,5 +38,13 @@ export class AuthService {
       }
       throw err;
     }
+  }
+
+  //TODO: use unique generated token instead of id
+  async verifyUser(verifyUserDto: VerifyUserDto) {
+    const { id } = verifyUserDto;
+    const user = await this.usersRepository.findOneBy({ id });
+    await this.usersRepository.save({ ...user, status: UserStatus.VERIFIED });
+    //TODO: Send mail ?
   }
 }

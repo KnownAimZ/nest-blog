@@ -19,7 +19,7 @@ export class User {
   @Column({
     type: 'enum',
     enum: UserStatus,
-    default: UserStatus.UNVERIFIED
+    default: UserStatus.UNVERIFIED,
   })
   status: UserStatus;
 
