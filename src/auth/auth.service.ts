@@ -16,6 +16,7 @@ import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { MailService } from 'src/mail/mail.service';
 import { VerifyUserDto } from './dto/verify-user.dto';
 import { v4 as uuidv4 } from 'uuid';
+import { RequestPasswordResubmitDto } from './dto/request-password-resubmit.dto';
 @Injectable()
 export class AuthService {
   constructor(
@@ -57,7 +58,21 @@ export class AuthService {
     if (user.status === UserStatus.VERIFIED) {
       throw new BadRequestException('User has been already verified');
     }
-    await this.usersRepository.save({ ...user, status: UserStatus.VERIFIED });
+    user.status = UserStatus.VERIFIED;
+    await this.usersRepository.save(user);
     //TODO: Send mail ?
+  }
+
+  async requestPasswordResubmit(
+    requestPasswordResubmitDto: RequestPasswordResubmitDto,
+  ) {
+    const { email } = requestPasswordResubmitDto;
+    const user = await this.usersRepository.findOneBy({ email });
+    if (!user) {
+      throw new NotFoundException('There is no user with this email address');
+    }
+    user.resubmitPasswordLink = uuidv4();
+    await this.usersRepository.save(user);
+    await this.mailService.requestPasswordResubmit(user);
   }
 }

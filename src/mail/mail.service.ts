@@ -17,4 +17,17 @@ export class MailService {
       },
     });
   }
+
+  async requestPasswordResubmit(user: User) {
+    await this.mailerService.sendMail({
+      to: user.email,
+      subject: 'Confirm password resubmit',
+      template: 'confirm-password-resubmit',
+      context: {
+        name: user.name,
+        email: user.email,
+        link: user.resubmitPasswordLink,
+      },
+    });
+  }
 }

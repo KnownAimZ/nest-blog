@@ -29,6 +29,13 @@ export class User {
   })
   verificationLink: string;
 
+  @Column({
+    nullable: true,
+    type: 'uuid',
+    default: null,
+  })
+  resubmitPasswordLink;
+
   @Column()
   password: string;
 }
