@@ -1,9 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
-export enum UserStatus {
-  UNVERIFIED = 'unverified',
-  VERIFIED = 'verified',
-}
+import { UserStatus } from '../interfaces/user-status.enum';
+import { UserRole } from '../interfaces/user-role.enum';
 
 @Entity()
 export class User {
@@ -38,4 +35,11 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column({
+    type: 'enum',
+    enum: UserRole,
+    default: UserRole.Customer,
+  })
+  role: UserRole;
 }

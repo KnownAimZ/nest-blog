@@ -6,7 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User, UserStatus } from 'src/user/entities/user.entity';
+import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { HashingService } from './hashing/hashing.service';
 import { JwtService } from '@nestjs/jwt';
@@ -18,6 +18,7 @@ import { VerifyUserDto } from './dto/verify-user.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { RequestPasswordResubmitDto } from './dto/request-password-resubmit.dto';
 import { ResubmitPasswordDto } from './dto/resubmit-password.dto';
+import { UserStatus } from 'src/user/interfaces/user-status.enum';
 @Injectable()
 export class AuthService {
   constructor(
