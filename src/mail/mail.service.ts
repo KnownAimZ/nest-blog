@@ -10,9 +10,10 @@ export class MailService {
     await this.mailerService.sendMail({
       to: user.email,
       subject: 'Welcome to NestShop! Please confirm your registration',
-      template: 'confirm',
+      template: 'confirm-verification',
       context: {
         name: user.name,
+        link: user.verificationLink,
       },
     });
   }

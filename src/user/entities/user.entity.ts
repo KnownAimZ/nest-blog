@@ -23,6 +23,12 @@ export class User {
   })
   status: UserStatus;
 
+  @Column({
+    nullable: true,
+    type: 'uuid',
+  })
+  verificationLink: string;
+
   @Column()
   password: string;
 }

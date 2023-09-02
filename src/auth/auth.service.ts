@@ -1,4 +1,10 @@
-import { ConflictException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User, UserStatus } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -9,7 +15,7 @@ import { ConfigType } from '@nestjs/config';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { MailService } from 'src/mail/mail.service';
 import { VerifyUserDto } from './dto/verify-user.dto';
-
+import { v4 as uuidv4 } from 'uuid';
 @Injectable()
 export class AuthService {
   constructor(
@@ -24,8 +30,10 @@ export class AuthService {
   async signUp(signUpDto: CreateUserDto) {
     try {
       const hashedPassword = await this.hashingService.hash(signUpDto.password);
+      const verificationLink = uuidv4();
       const user = (await this.usersRepository.save({
         ...signUpDto,
+        verificationLink,
         password: hashedPassword,
       })) as User;
       await this.mailService.validateUser(user);
@@ -40,10 +48,15 @@ export class AuthService {
     }
   }
 
-  //TODO: use unique generated token instead of id
   async verifyUser(verifyUserDto: VerifyUserDto) {
-    const { id } = verifyUserDto;
-    const user = await this.usersRepository.findOneBy({ id });
+    const { verificationLink } = verifyUserDto;
+    const user = await this.usersRepository.findOneBy({ verificationLink });
+    if (!user) {
+      throw new NotFoundException('Wrong verification link');
+    }
+    if (user.status === UserStatus.VERIFIED) {
+      throw new BadRequestException('User has been already verified');
+    }
     await this.usersRepository.save({ ...user, status: UserStatus.VERIFIED });
     //TODO: Send mail ?
   }
