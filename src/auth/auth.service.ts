@@ -17,6 +17,7 @@ import { MailService } from 'src/mail/mail.service';
 import { VerifyUserDto } from './dto/verify-user.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { RequestPasswordResubmitDto } from './dto/request-password-resubmit.dto';
+import { ResubmitPasswordDto } from './dto/resubmit-password.dto';
 @Injectable()
 export class AuthService {
   constructor(
@@ -74,5 +75,17 @@ export class AuthService {
     user.resubmitPasswordLink = uuidv4();
     await this.usersRepository.save(user);
     await this.mailService.requestPasswordResubmit(user);
+  }
+
+  async resubmitPassword(resubmitPasswordDto: ResubmitPasswordDto) {
+    const { resubmitPasswordLink, password } = resubmitPasswordDto;
+    const user = await this.usersRepository.findOneBy({ resubmitPasswordLink });
+    if (!user) {
+      throw new NotFoundException('Wrong resubmit link');
+    }
+    const hashedPassword = await this.hashingService.hash(password);
+    user.password = hashedPassword;
+    user.resubmitPasswordLink = null;
+    await this.usersRepository.save(user);
   }
 }

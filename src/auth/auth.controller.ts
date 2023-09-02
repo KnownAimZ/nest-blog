@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { VerifyUserDto } from './dto/verify-user.dto';
 import { RequestPasswordResubmitDto } from './dto/request-password-resubmit.dto';
+import { ResubmitPasswordDto } from './dto/resubmit-password.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -22,8 +23,13 @@ export class AuthController {
 
   @Post('request-password-resubmit')
   requestPasswordResubmit(
-    @Body() requestPasswordResubmit: RequestPasswordResubmitDto,
+    @Body() requestPasswordResubmitDto: RequestPasswordResubmitDto,
   ) {
-    return this.authService.requestPasswordResubmit(requestPasswordResubmit);
+    return this.authService.requestPasswordResubmit(requestPasswordResubmitDto);
+  }
+
+  @Post('resubmit-password')
+  resubmitPassword(@Body() resubmitPasswordDto: ResubmitPasswordDto) {
+    return this.authService.resubmitPassword(resubmitPasswordDto);
   }
 }
