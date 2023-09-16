@@ -8,6 +8,8 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from './entities/category.entity';
 import { Repository } from 'typeorm';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { formatPaginationQuerry } from 'src/common/functions/format-pagination-querry';
 
 @Injectable()
 export class CategoriesService {
@@ -27,8 +29,8 @@ export class CategoriesService {
     }
   }
 
-  async findAll() {
-    return await this.categoryRepository.find();
+  async findAll(query: PaginationQueryDto<Category>) {
+    return await this.categoryRepository.find(formatPaginationQuerry(query));
   }
 
   async findOne(id: number) {
