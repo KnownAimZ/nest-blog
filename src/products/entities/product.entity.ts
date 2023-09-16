@@ -18,6 +18,9 @@ export class Product {
   @Column({ nullable: true })
   description: string;
 
+  @Column({ nullable: false, default: 0 })
+  price: number;
+
   @ManyToMany(() => Category)
   @JoinTable()
   categories: Category[];
