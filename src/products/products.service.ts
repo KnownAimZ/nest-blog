@@ -3,8 +3,10 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Category } from 'src/categories/entities/category.entity';
+import { formatPaginationQuerry } from 'src/common/functions/format-pagination-querry';
+import { ProductQuery } from './dto/product-query.dto';
 
 @Injectable()
 export class ProductsService {
@@ -28,8 +30,16 @@ export class ProductsService {
     return this.productRepository.save(product);
   }
 
-  async findAll() {
-    return await this.productRepository.find({ relations: ['categories'] });
+  async findAll(query: ProductQuery) {
+    const shouldFilterByCategoryNames = !!query.categories?.length;
+    const formatedQuery = formatPaginationQuerry(query);
+    return await this.productRepository.find({
+      ...formatedQuery,
+      relations: ['categories'],
+      ...(shouldFilterByCategoryNames && {
+        where: { categories: { name: In(query.categories) } },
+      }),
+    });
   }
 
   async findOne(id: number) {
