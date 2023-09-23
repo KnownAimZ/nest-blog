@@ -4,6 +4,7 @@ import {
   Inject,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
@@ -19,6 +20,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { RequestPasswordResubmitDto } from './dto/request-password-resubmit.dto';
 import { ResubmitPasswordDto } from './dto/resubmit-password.dto';
 import { UserStatus } from 'src/user/interfaces/user-status.enum';
+import { SignInDto } from './dto/sign-in.dto';
 @Injectable()
 export class AuthService {
   constructor(
@@ -49,6 +51,40 @@ export class AuthService {
       }
       throw err;
     }
+  }
+
+  async signIn(signInDto: SignInDto) {
+    const user = await this.usersRepository.findOneBy({
+      email: signInDto.email,
+    });
+    if (!user) {
+      throw new UnauthorizedException('User does not exists');
+    }
+    const isEqual = await this.hashingService.compare(
+      signInDto.password,
+      user.password,
+    );
+    if (!isEqual) {
+      throw new UnauthorizedException('Password does not match');
+    }
+    if (user.status === UserStatus.UNVERIFIED) {
+      throw new ConflictException('User is not verified');
+    }
+    const accessToken = await this.jwtService.signAsync(
+      {
+        sub: user.id,
+        email: user.email,
+      },
+      {
+        audience: this.jwtConfiguration.audience,
+        issuer: this.jwtConfiguration.issuer,
+        secret: this.jwtConfiguration.secret,
+        expiresIn: this.jwtConfiguration.accessTokenTtl,
+      },
+    );
+    return {
+      accessToken,
+    };
   }
 
   async verifyUser(verifyUserDto: VerifyUserDto) {

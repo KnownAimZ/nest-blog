@@ -5,6 +5,7 @@ import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { VerifyUserDto } from './dto/verify-user.dto';
 import { RequestPasswordResubmitDto } from './dto/request-password-resubmit.dto';
 import { ResubmitPasswordDto } from './dto/resubmit-password.dto';
+import { SignInDto } from './dto/sign-in.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -14,6 +15,11 @@ export class AuthController {
   @Post('sign-up')
   signUp(@Body() createUserDto: CreateUserDto) {
     return this.authService.signUp(createUserDto);
+  }
+
+  @Post('sign-in')
+  signIn(@Body() signInDto: SignInDto) {
+    return this.authService.signIn(signInDto);
   }
 
   @Post('verify')
