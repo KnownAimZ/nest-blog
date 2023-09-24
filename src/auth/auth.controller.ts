@@ -6,7 +6,9 @@ import { VerifyUserDto } from './dto/verify-user.dto';
 import { RequestPasswordResubmitDto } from './dto/request-password-resubmit.dto';
 import { ResubmitPasswordDto } from './dto/resubmit-password.dto';
 import { SignInDto } from './dto/sign-in.dto';
+import { Public } from './decorators/public.decorator';
 
+@Public()
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {

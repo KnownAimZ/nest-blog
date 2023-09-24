@@ -16,6 +16,7 @@ async function bootstrap() {
     }),
   );
   const options = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('Nest Blog')
     .setDescription('Test Blog app created with Nest/TypeORM/PostgreSQL')
     .setVersion('1.0')

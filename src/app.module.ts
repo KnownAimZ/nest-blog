@@ -9,6 +9,11 @@ import { MailModule } from './mail/mail.module';
 import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
 import typeorm from 'src/config/typeorm.config';
+import { JwtModule } from '@nestjs/jwt';
+import jwtConfig from './auth/config/jwt.config';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './auth/guards/auth.guard';
+import { RolesGuard } from './auth/guards/role.guard';
 
 @Module({
   imports: [
@@ -21,6 +26,11 @@ import typeorm from 'src/config/typeorm.config';
       useFactory: async (configService: ConfigService) =>
         configService.get('typeorm'),
     }),
+    JwtModule.registerAsync({
+      global: true,
+      ...jwtConfig.asProvider(),
+    }),
+    ConfigModule.forFeature(jwtConfig),
     UserModule,
     AuthModule,
     MailModule,
@@ -28,6 +38,16 @@ import typeorm from 'src/config/typeorm.config';
     CategoriesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}

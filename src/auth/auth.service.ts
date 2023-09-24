@@ -4,7 +4,6 @@ import {
   Inject,
   Injectable,
   NotFoundException,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
@@ -58,14 +57,14 @@ export class AuthService {
       email: signInDto.email,
     });
     if (!user) {
-      throw new UnauthorizedException('User does not exists');
+      throw new NotFoundException('User does not exists');
     }
     const isEqual = await this.hashingService.compare(
       signInDto.password,
       user.password,
     );
     if (!isEqual) {
-      throw new UnauthorizedException('Password does not match');
+      throw new ConflictException('Password does not match');
     }
     if (user.status === UserStatus.UNVERIFIED) {
       throw new ConflictException('User is not verified');
@@ -74,6 +73,7 @@ export class AuthService {
       {
         sub: user.id,
         email: user.email,
+        role: user.role,
       },
       {
         audience: this.jwtConfiguration.audience,
