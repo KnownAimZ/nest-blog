@@ -29,7 +29,7 @@ export class CategoriesService {
     }
   }
 
-  async findAll(query: PaginationQueryDto<Category>) {
+  async findAll(query: PaginationQueryDto) {
     return await this.categoryRepository.find(formatPaginationQuerry(query));
   }
 

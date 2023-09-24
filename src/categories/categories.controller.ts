@@ -13,7 +13,6 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
-import { Category } from './entities/category.entity';
 import { Role } from 'src/auth/decorators/roles.decorator';
 import { UserRole } from 'src/user/interfaces/user-role.enum';
 
@@ -30,7 +29,7 @@ export class CategoriesController {
   }
 
   @Get()
-  findAll(@Query() query: PaginationQueryDto<Category>) {
+  findAll(@Query() query: PaginationQueryDto) {
     return this.categoriesService.findAll(query);
   }
 

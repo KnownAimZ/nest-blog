@@ -1,10 +1,9 @@
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
-import { Product } from '../entities/product.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type, Transform } from 'class-transformer';
 import { IsOptional, IsArray, IsString } from 'class-validator';
 
-export class ProductQuery extends PaginationQueryDto<Product> {
+export class ProductQuery extends PaginationQueryDto {
   @ApiProperty({
     example: 'Category_1,Category_2',
     title: 'Categories',

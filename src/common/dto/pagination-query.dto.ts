@@ -3,7 +3,7 @@ import { Type } from 'class-transformer';
 import { IsInt, IsOptional, IsPositive, IsString } from 'class-validator';
 import { FindOptionsOrderValue } from 'typeorm';
 
-export class PaginationQueryDto<T> {
+export class PaginationQueryDto {
   @ApiProperty({
     default: 10,
     format: 'number',
