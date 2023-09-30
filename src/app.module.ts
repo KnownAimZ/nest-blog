@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { MailModule } from './mail/mail.module';
 import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
+import { CartModule } from './cart/cart.module';
 import typeorm from 'src/config/typeorm.config';
 import { JwtModule } from '@nestjs/jwt';
 import jwtConfig from './auth/config/jwt.config';
@@ -36,6 +37,7 @@ import { RolesGuard } from './auth/guards/role.guard';
     MailModule,
     ProductsModule,
     CategoriesModule,
+    CartModule,
   ],
   controllers: [AppController],
   providers: [
