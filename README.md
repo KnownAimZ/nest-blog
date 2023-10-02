@@ -4,9 +4,9 @@ Shop App created with Nest, Typeorm and Postgres
 
 ## Installation
 
-Create .env in root
-Copy .env.example details in .env
-Use nvm to instal/select correct version of node
+- Create .env in root
+- Copy .env.example details in .env
+- Use nvm to instal/select correct version of node
 
 ```bash
 $ npm install
