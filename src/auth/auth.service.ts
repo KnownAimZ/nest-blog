@@ -15,11 +15,12 @@ import { ConfigType } from '@nestjs/config';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { MailService } from 'src/mail/mail.service';
 import { VerifyUserDto } from './dto/verify-user.dto';
-import { v4 as uuidv4 } from 'uuid';
 import { RequestPasswordResubmitDto } from './dto/request-password-resubmit.dto';
 import { ResubmitPasswordDto } from './dto/resubmit-password.dto';
 import { UserStatus } from 'src/user/interfaces/user-status.enum';
 import { SignInDto } from './dto/sign-in.dto';
+import { randomUUID } from 'crypto';
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -34,7 +35,7 @@ export class AuthService {
   async signUp(signUpDto: CreateUserDto) {
     try {
       const hashedPassword = await this.hashingService.hash(signUpDto.password);
-      const verificationLink = uuidv4();
+      const verificationLink = randomUUID();
       const user = (await this.usersRepository.save({
         ...signUpDto,
         verificationLink,
@@ -110,7 +111,7 @@ export class AuthService {
     if (!user) {
       throw new NotFoundException('There is no user with this email address');
     }
-    user.resubmitPasswordLink = uuidv4();
+    user.resubmitPasswordLink = randomUUID();
     await this.usersRepository.save(user);
     await this.mailService.requestPasswordResubmit(user);
   }
