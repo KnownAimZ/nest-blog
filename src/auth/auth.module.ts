@@ -9,6 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 import { HashingService } from './hashing/hashing.service';
 import { BcryptService } from './hashing/bcrypt.service';
 import { MailModule } from 'src/mail/mail.module';
+import { ScryptService } from './hashing/scrypt.service';
 
 @Module({
   imports: [
@@ -22,8 +23,9 @@ import { MailModule } from 'src/mail/mail.module';
     AuthService,
     {
       provide: HashingService,
-      useClass: BcryptService,
+      useClass: ScryptService,
     },
+    ScryptService,
   ],
 })
 export class AuthModule {}
