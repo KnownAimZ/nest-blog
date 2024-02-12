@@ -1,2 +1,2 @@
 1. Refactor cart module
-2. Fix imports
+2. Fix imports (done)
