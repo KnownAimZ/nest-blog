@@ -3,18 +3,17 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
-import { MailModule } from './mail/mail.module';
-import { ProductsModule } from './products/products.module';
-import { CategoriesModule } from './categories/categories.module';
-import { CartModule } from './cart/cart.module';
-import typeorm from 'src/config/typeorm.config';
+import { UserModule } from 'user';
+import { AuthModule } from 'auth';
+import { MailModule } from 'mail';
+import { ProductsModule } from 'products';
+import { CategoriesModule } from 'categories';
+import { CartModule } from 'cart';
+import typeorm from 'config/typeorm.config';
 import { JwtModule } from '@nestjs/jwt';
-import jwtConfig from './auth/config/jwt.config';
+import jwtConfig from 'auth/config/jwt.config';
 import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from './auth/guards/auth.guard';
-import { RolesGuard } from './auth/guards/role.guard';
+import { AuthGuard, RolesGuard } from 'auth/guards';
 
 @Module({
   imports: [

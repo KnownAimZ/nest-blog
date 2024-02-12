@@ -1,4 +1,4 @@
-import { Product } from 'src/products/entities/product.entity';
+import { Product } from 'products/entities';
 import {
   Column,
   Entity,
@@ -7,7 +7,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Cart } from './cart.entity';
+import { Cart } from 'cart/entities';
 
 @Entity()
 export class CartItem {

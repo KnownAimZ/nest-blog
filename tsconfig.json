@@ -9,13 +9,26 @@
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "app/*": ["/*"],
+      "auth/*": ["auth/*"],
+      "cart/*": ["cart/*"],
+      "categories/*": ["categories/*"],
+      "common/*": ["common/*"],
+      "config/*": ["config/*"],
+      "database/*": ["database/*"],
+      "mail/*": ["mail/*"],
+      "migrations/*": ["migrations/*"],
+      "products/*": ["products/*"],
+      "user/*": ["user/*"],
+    }
   }
 }

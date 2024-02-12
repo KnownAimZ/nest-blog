@@ -3,13 +3,12 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
+import { CreateCategoryDto, UpdateCategoryDto } from 'categories/dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Category } from './entities/category.entity';
+import { Category } from 'categories/entities';
 import { Repository } from 'typeorm';
-import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
-import { formatPaginationQuerry } from 'src/common/functions/format-pagination-querry';
+import { PaginationQueryDto } from 'common/dto';
+import { formatPaginationQuerry } from 'common/functions';
 
 @Injectable()
 export class CategoriesService {

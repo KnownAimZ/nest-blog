@@ -8,13 +8,11 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
-import { ProductsService } from './products.service';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
-import { ProductQuery } from './dto/product-query.dto';
+import { CreateProductDto, UpdateProductDto, ProductQuery } from 'products/dto';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { Role } from 'src/auth/decorators/roles.decorator';
-import { UserRole } from 'src/user/interfaces/user-role.enum';
+import { Role } from 'auth/decorators';
+import { UserRole } from 'user/interfaces';
+import { ProductsService } from './products.service';
 
 @ApiBearerAuth()
 @Controller('products')

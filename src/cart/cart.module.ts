@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Cart, CartItem } from 'cart/entities';
+import { ProductsModule } from 'products';
+import { UserModule } from 'user';
 import { CartService } from './cart.service';
 import { CartController } from './cart.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Cart } from './entities/cart.entity';
-import { CartItem } from './entities/cart-item.entity';
-import { ProductsModule } from 'src/products/products.module';
-import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports: [

@@ -1,9 +1,9 @@
 import { Body, Controller, Delete, Get, Post, Req } from '@nestjs/common';
-import { CartService } from './cart.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { CartProductDto } from './dto/cart-product.dto';
-import { User as UserEntity } from 'src/user/entities/user.entity';
-import { User } from 'src/user/decorators/user.decorator';
+import { CartProductDto } from 'cart/dto';
+import { User as UserEntity } from 'user/entities';
+import { User } from 'user/decorators';
+import { CartService } from './cart.service';
 
 @ApiBearerAuth()
 @ApiTags('cart')

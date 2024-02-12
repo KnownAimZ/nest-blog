@@ -1,4 +1,4 @@
-import { PaginationQueryDto } from '../dto/pagination-query.dto';
+import { PaginationQueryDto } from 'common/dto';
 
 export function formatPaginationQuerry(query: PaginationQueryDto) {
   const { limit, offset, orderBy, orderDirection } = query;

@@ -6,20 +6,22 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
-import { HashingService } from './hashing/hashing.service';
 import { JwtService } from '@nestjs/jwt';
-import jwtConfig from './config/jwt.config';
+import jwtConfig from 'auth/config/jwt.config';
 import { ConfigType } from '@nestjs/config';
-import { CreateUserDto } from 'src/user/dto/create-user.dto';
-import { MailService } from 'src/mail/mail.service';
 import { VerifyUserDto } from './dto/verify-user.dto';
-import { RequestPasswordResubmitDto } from './dto/request-password-resubmit.dto';
-import { ResubmitPasswordDto } from './dto/resubmit-password.dto';
-import { UserStatus } from 'src/user/interfaces/user-status.enum';
-import { SignInDto } from './dto/sign-in.dto';
 import { randomUUID } from 'crypto';
+import { MailService } from 'mail';
+import { User } from 'user/entities';
+import { HashingService } from 'auth/hashing';
+import { CreateUserDto } from 'user/dto';
+import {
+  RequestPasswordResubmitDto,
+  ResubmitPasswordDto,
+  SignInDto,
+} from 'auth/dto';
+import { UserStatus } from 'user/interfaces';
 
 @Injectable()
 export class AuthService {

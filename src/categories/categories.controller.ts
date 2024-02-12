@@ -8,13 +8,12 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
-import { CategoriesService } from './categories.service';
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
+import { CreateCategoryDto, UpdateCategoryDto } from 'categories/dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
-import { Role } from 'src/auth/decorators/roles.decorator';
-import { UserRole } from 'src/user/interfaces/user-role.enum';
+import { PaginationQueryDto } from 'common/dto';
+import { Role } from 'auth/decorators';
+import { UserRole } from 'user/interfaces';
+import { CategoriesService } from './categories.service';
 
 @ApiBearerAuth()
 @ApiTags('categories')

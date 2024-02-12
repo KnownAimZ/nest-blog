@@ -1,12 +1,14 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { CreateUserDto } from 'user/dto';
+import {
+  VerifyUserDto,
+  RequestPasswordResubmitDto,
+  ResubmitPasswordDto,
+  SignInDto,
+} from 'auth/dto';
+import { Public } from 'auth/decorators';
 import { AuthService } from './auth.service';
-import { CreateUserDto } from 'src/user/dto/create-user.dto';
-import { VerifyUserDto } from './dto/verify-user.dto';
-import { RequestPasswordResubmitDto } from './dto/request-password-resubmit.dto';
-import { ResubmitPasswordDto } from './dto/resubmit-password.dto';
-import { SignInDto } from './dto/sign-in.dto';
-import { Public } from './decorators/public.decorator';
 
 @Public()
 @ApiTags('auth')

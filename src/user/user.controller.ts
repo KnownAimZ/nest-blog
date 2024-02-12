@@ -1,8 +1,8 @@
 import { Controller, Get } from '@nestjs/common';
-import { UserService } from './user.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { User } from './decorators/user.decorator';
-import { User as UserEntity } from './entities/user.entity';
+import { User } from 'user/decorators';
+import { User as UserEntity } from 'user/entities';
+import { UserService } from './user.service';
 
 @ApiBearerAuth()
 @ApiTags('user')

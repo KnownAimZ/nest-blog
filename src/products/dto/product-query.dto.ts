@@ -1,4 +1,4 @@
-import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { PaginationQueryDto } from 'common/dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type, Transform } from 'class-transformer';
 import { IsOptional, IsArray, IsString } from 'class-validator';
